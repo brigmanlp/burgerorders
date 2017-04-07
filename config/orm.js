@@ -25,9 +25,10 @@ function objToSql(ob) {
     return arr.toString();
 }
 
-// Object for all our SQL statement functions.
+// Object for all our SQL statement functions.This will 
+// Retrieve all the data from the database
 var orm = {
-    all: function(tableInput, cb) {
+    selectAll: function(tableInput, cb) {
         var queryString = "SELECT * FROM " + tableInput + ";";
         connection.query(queryString, function(err, result) {
             if (err) {
@@ -36,7 +37,9 @@ var orm = {
             cb(result);
         });
     },
-    create: function(table, cols, vals, cb) {
+    // vals is an array of values that we want to save to cols
+    // cols are the columns we want to insert the values into
+    insertOne: function(table, cols, vals, cb) {
         var queryString = "INSERT INTO " + table;
 
         queryString += " (";
@@ -55,8 +58,9 @@ var orm = {
             cb(result);
         });
     },
-    // An example of objColVals would be {name: panther, sleepy: true}
-    update: function(table, objColVals, condition, cb) {
+    // objColVals are the columns and values to update
+    // An example of objColVals would be {name: turkey, devoured: false}
+    updateOne: function(table, objColVals, condition, cb) {
         var queryString = "UPDATE " + table;
 
         queryString += " SET ";
@@ -77,7 +81,7 @@ var orm = {
         var queryString = "DELETE FROM " + table;
         queryString += " WHERE ";
         queryString += condition;
-
+        console.log(queryString);
         connection.query(queryString, function(err, result) {
             if (err) {
                 throw err;

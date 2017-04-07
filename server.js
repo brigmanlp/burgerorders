@@ -2,8 +2,8 @@ var express = require("express");
 var bodyParser = require("body-parser");
 var methodOverride = require("method-override");
 
-var port = 8080;
-var app = expres();
+var port = process.env.PORT || 8080;
+var app = express();
 
 // Serve static content for the app from the "public" directory
 //in the app directory.
@@ -24,4 +24,6 @@ app.set("view engine", "handlebars");
 var routes = require("./controllers/burgers_controller.js")
 
 app.use("/", routes);
-app.listen(port);
+app.listen(port, function() {
+    console.log("App is listening on port " + port);
+});
